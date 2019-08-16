@@ -18,6 +18,7 @@ const authRouter = require('./routes/auth');
 const app = express();
 
 const Connection = require('tedious').Connection;
+const AuthDao = require('./domain/auth_dao_impl');
 const AuthService = require('./domain/authentication_service');
 
 // view engine setup
@@ -49,7 +50,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.use(session({
-    store: new RedisStore(config.redisStore.url),
+    store: new RedisStore(config.redisStore),
     secret: config.redisStore.secret,
     resave: false,
     saveUninitialized: false
@@ -58,8 +59,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 let connection = new Connection(config.mssqlStore);
-
-authService = new AuthService(connection);
+let authDao = new AuthDao(connection);
+let authService = new AuthService(authDao);
 
 module.exports = app;
 module.exports.AuthService = authService;

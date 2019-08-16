@@ -1,7 +1,8 @@
 const config = {};
 
 config.redisStore = {
-    url: process.env.REDIS_STORE_URI,
+    host: process.env.REDIS_STORE_URI,
+    port: 6379,
     secret: process.env.REDIS_STORE_SECRET
 };
 
@@ -9,7 +10,7 @@ config.mssqlStore = {
     server: process.env.MSSQL_URL,
     options: {
         database: process.env.MSSQL_DATABASE_NAME,
-        port: process.env.MSSQL_PORT,
+        port: Number(process.env.MSSQL_PORT),
     },
     authentication: {
         type: process.env.MSSQL_AUTHENTICATION_TYPE,
