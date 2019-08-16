@@ -3,12 +3,27 @@ function AuthenticationService(connection) {
 }
 
 AuthenticationService.prototype.authenticate = async function (username, password) {
-    return true
+    return {
+        id: 1,
+        username: username,
+        password: password
+    }
 };
 
 AuthenticationService.prototype.register = async function (username, password) {
-    // TODO: register to database
-    return true
+    return {
+        id: 1,
+        username: username,
+        password: password
+    }
+};
+
+AuthenticationService.prototype.findUser = async function (identifier) {
+    return {
+        id: 1,
+        username: 'test_user',
+        password: 'test_user'
+    }
 };
 
 module.exports = AuthenticationService;
