@@ -11,6 +11,7 @@ config.mssqlStore = {
     options: {
         database: process.env.MSSQL_DATABASE_NAME,
         port: Number(process.env.MSSQL_PORT),
+        rowCollectionOnRequestCompletion: true
     },
     authentication: {
         type: process.env.MSSQL_AUTHENTICATION_TYPE,

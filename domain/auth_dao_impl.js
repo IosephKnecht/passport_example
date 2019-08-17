@@ -1,28 +1,28 @@
-const Connection = require('tedious').Connection;
-const Request = require('tedious').Request;
-const Types = require('tedious').TYPES;
 const AuthDao = require('../data/auth_dao');
+const TediousWrapper = require('./tedious_wrapper');
+const bcrypt = require('bcrypt');
 
 class AuthDaoImpl extends AuthDao {
     constructor(connection) {
         super();
-        if (connection instanceof Connection === false) {
-            throw TypeError('except tedious session object')
-        }
         this.connection = connection;
     }
 
     async register(username, password) {
+        // TODO: register
     }
 
     async authenticate(username, password) {
+        // TODO: authenticate
     }
 
-    async findUser(username) {
-        let request = Request('Select username, password, password_salt where username = @username');
-        request.addParameter('username', Types.VarChar, username);
 
-        return this.connection.execSql(request);
+    async findUser(username) {
+        return TediousWrapper.execSqlWithParams(this.connection, 'Select * from dbo.\"user\"' +
+            'where dbo.\"user\".username = @username',
+            [
+                {name: 'username', type: 'VarChar', value: username}
+            ]);
     }
 }
 
