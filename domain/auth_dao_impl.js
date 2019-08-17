@@ -13,16 +13,18 @@ class AuthDaoImpl extends AuthDao {
     }
 
     async authenticate(username, password) {
-        // TODO: authenticate
+        let result = this.findUser(username);
     }
 
 
     async findUser(username) {
-        return TediousWrapper.execSqlWithParams(this.connection, 'Select * from dbo.\"user\"' +
-            'where dbo.\"user\".username = @username',
-            [
-                {name: 'username', type: 'VarChar', value: username}
-            ]);
+        let query = 'SELECT username, password, password_salt FROM dbo.\"user\" WHERE username=@username';
+
+        return await TediousWrapper.execSqlWithParams(this.connection, query, [{
+            name: 'username',
+            type: 'VarChar',
+            value: username
+        }]);
     }
 }
 
