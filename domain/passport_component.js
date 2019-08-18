@@ -3,16 +3,18 @@ const LocalStrategy = require('passport-local').Strategy;
 const AuthService = require('../app').AuthService;
 
 passport.serializeUser(function (user, callback) {
-    if (!user && !user.id) {
-        callback(null, user.id)
+    let username = user[0].value;
+
+    if (!user || !username) {
+        callback(null);
     } else {
-        callback(null)
+        callback(null, username)
     }
 });
 
-passport.deserializeUser(async function (identifier, callback) {
+passport.deserializeUser(async function (username, callback) {
     try {
-        let user = await AuthService.findUser(identifier);
+        let user = await AuthService.findUser(username);
         callback(null, user)
     } catch (e) {
         callback(e)
@@ -24,7 +26,7 @@ function initialize() {
         async function (username, password, done) {
             try {
                 let isSuccess = await AuthService.authenticate(username, password);
-                done(isSuccess, false)
+                done(null, isSuccess)
             } catch (e) {
                 done(e, null)
             }

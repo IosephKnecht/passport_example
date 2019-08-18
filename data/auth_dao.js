@@ -4,7 +4,6 @@ class AuthDao {
             throw new TypeError("Cannot construct Abstract instances directly");
         }
         if (this.findUser === undefined ||
-            this.authenticate === undefined ||
             this.register === undefined) {
             throw new TypeError("must be override")
         }
