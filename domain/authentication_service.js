@@ -10,6 +10,12 @@ function AuthenticationService(dao) {
 
 AuthenticationService.prototype.authenticate = async function (username, password) {
     let result = await this.dao.findUser(username);
+    let count = !result.count ? 0 : result.count;
+
+    if (count === 0) {
+        return undefined
+    }
+
     let encryptPassword = result.rows[0][1].value;
 
     let equal = bcrypt.compareSync(password, encryptPassword);

@@ -29,6 +29,8 @@ input, .but {
    margin: 2% 0;
    font-weight: bold;
    text-decoration: none;
+   padding-left: 2%;
+   padding-right: 2%;
 }
 .but {
    width: 48%;
